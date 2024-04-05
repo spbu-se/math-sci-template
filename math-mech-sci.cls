@@ -70,7 +70,6 @@
 \fi
 
 \RequirePackage[unicode]{hyperref}
-\RequirePackage{authblk}
 \RequirePackage{booktabs}
 \RequirePackage{indentfirst}
 \RequirePackage{titlesec}
@@ -102,14 +101,6 @@
   }%
   \item\relax}
  {\endlist}
-
-\renewcommand\maketitle{
-  \begin{center}%
-    \vspace*{-12mm}
-    {\Large\bfseries\scshape \@title \par\vspace{3mm}}%
-    {\@author}
-  \end{center}\par
-}
 
 % remove numbering
 \setcounter{secnumdepth}{-1}
@@ -150,5 +141,56 @@ xleftmargin=5mm
 {\renewcommand{\arraystretch}{1.2}% for the vertical padding
 
 \sloppy
+
+% authors metadata
+
+\RequirePackage{hyperxmp}
+\RequirePackage{etoolbox}
+
+\newbool{firstauthor}
+\booltrue{firstauthor}
+\newcommand{\defauthor}[4][]{%
+  \ifbool{firstauthor}{%
+    \appto\atext{#2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
+    \appto\ameta{#2}%
+    \appto\xmeta{\xmpquote{#2}}%
+    \boolfalse{firstauthor}
+  }{%
+    \appto\atext{,\\ #2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
+    \appto\ameta{ \and #2}%
+    \appto\xmeta{ \and \xmpquote{#2}}%
+  }%
+}
+
+\def\titlethanks{}
+\newcommand{\deftitle}[2][]{%
+  \def\titlethanks{#1}
+  \title{#2}
+}
+
+\renewcommand\maketitle{%
+  \author{\ameta}%
+  \patchcmd{\xmeta}{, }{\xmpcomma\ }{\author{\xmeta}}{}%
+  \hypersetup{%
+    pdfauthor={\xmeta}%
+  }%
+  \begin{center}%
+    \vspace*{-12mm}
+    {\Large\bfseries\scshape \@title\titlethanks \par\vspace{3mm}}%
+    {\small\atext}
+  \end{center}\par%
+}
+
+\iffalse
+
+
+\patchcmd{\xmeta}{, }{\xmpcomma\ }{\author{\xmeta}}{}%
+
+\author{\xmeta}
+\hypersetup{%
+  pdfauthor={\xmeta}%
+}%
+\show\xmeta%
+\fi
 
 \endinput

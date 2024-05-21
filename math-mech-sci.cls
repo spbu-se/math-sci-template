@@ -17,7 +17,7 @@
 \RequirePackage{fontspec}
 \RequirePackage{xltxtra}
 %\RequirePackage{xecyr}
-\defaultfontfeatures{Mapping=tex-text,Ligatures={TeX},Kerning=On}
+\defaultfontfeatures{Mapping=tex-text,Ligatures={TeX}}
 
 % Windows fonts
 \iffalse
@@ -33,7 +33,9 @@
     ItalicFont=*-Italic,
     BoldFont=*-Bold,
     BoldItalicFont=*-BoldItalic,
+    Kerning=On
     ]}
+
 \def\MySansFont#1{\expandafter#1{LiberationSans}[
     Path = fonts/LiberationSans/,
     Extension=.ttf,
@@ -41,6 +43,7 @@
     ItalicFont=*-Italic,
     BoldFont=*-Bold,
     BoldItalicFont=*-BoldItalic,
+    Kerning=On
     ]}
 
 \def\MyMonoFont#1{\expandafter#1{IosevkaCustom}[
@@ -50,7 +53,7 @@
     UprightFont=*-Regular,
     ItalicFont=*-Italic,
     BoldFont=*-Bold,
-    BoldItalicFont=*-BoldItalic,
+    BoldItalicFont=*-BoldItalic
     ]}
 
 \fi
@@ -184,7 +187,7 @@
         }%
         \begin{center}%
             \vspace*{-12mm}
-            {\Large\bfseries\scshape \@title\titlethanks \par\vspace{3mm}}%
+            {\Large\bfseries \@title\titlethanks \par\vspace{3mm}}%
             {\small\atext}
         \end{center}\par%
     }

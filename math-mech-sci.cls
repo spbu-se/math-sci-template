@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{math-mech-sci}[2024/05/21 v0.1.1 Dmitry Luciv]
+\ProvidesClass{math-mech-sci}[2024/05/23 v0.1.2 Dmitry Luciv]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions
@@ -16,7 +16,7 @@
 \RequirePackage{mathspec}
 \RequirePackage{fontspec}
 \RequirePackage{xltxtra}
-%\RequirePackage{xecyr}
+\RequirePackage{xecyr}
 \defaultfontfeatures{Mapping=tex-text,Ligatures={TeX}}
 
 % Windows fonts
@@ -89,10 +89,10 @@
 \RequirePackage{listings}
 %\RequirePackage{minted}
 \RequirePackage{makecell}
-\RequirePackage{longtable}
 \RequirePackage{amscd}
 \RequirePackage{amssymb}
 \RequirePackage{accents}
+\RequirePackage[author={Мат-мех. Наука}]{pdfcomment}
 
 \RequirePackage[top=23mm,left=17mm,right=17mm,bottom=17mm]{geometry}
 
@@ -188,7 +188,9 @@
         \begin{center}%
             \vspace*{-12mm}
             {\Large\bfseries \@title\titlethanks \par\vspace{3mm}}%
-            {\small\atext}
+            {\small\atext}\ifxetex\else
+            \pdfcomment{Пожалуйста используйте XeLaTeX}
+            \fi
         \end{center}\par%
     }
 

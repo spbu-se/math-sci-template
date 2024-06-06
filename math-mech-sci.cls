@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{math-mech-sci}[2024/05/23 v0.1.2 Dmitry Luciv]
+\ProvidesClass{math-mech-sci}[2024/06/06 v0.1.3 Dmitry Luciv]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions
@@ -13,74 +13,74 @@
 
 \ifxetex
 
-\RequirePackage{mathspec}
-\RequirePackage{fontspec}
-\RequirePackage{xltxtra}
-\RequirePackage{xecyr}
-\defaultfontfeatures{Mapping=tex-text,Ligatures={TeX}}
+    \RequirePackage{mathspec}
+    \RequirePackage{fontspec}
+    \RequirePackage{xltxtra}
+    \RequirePackage{xecyr}
+    \defaultfontfeatures{Mapping=tex-text,Ligatures={TeX}}
 
-% Windows fonts
-\iffalse
-\def\MyRomanFont#1{\expandafter#1[]{Times New Roman}}
-\def\MyMonoFont#1{\expandafter#1[]{Courier New}}
-\def\MySansFont#1{\expandafter#1{Arial}}
+    % Windows fonts
+    \iffalse
+        \def\MyRomanFont#1{\expandafter#1[]{Times New Roman}}
+        \def\MyMonoFont#1{\expandafter#1[]{Courier New}}
+        \def\MySansFont#1{\expandafter#1{Arial}}
+    \else
+
+        \def\MyRomanFont#1{\expandafter#1{Tempora}[
+                Path = fonts/Tempora/,
+                Extension=.otf,
+                UprightFont=*-Regular,
+                ItalicFont=*-Italic,
+                BoldFont=*-Bold,
+                BoldItalicFont=*-BoldItalic,
+                Kerning=On
+            ]}
+
+        \def\MySansFont#1{\expandafter#1{LiberationSans}[
+                Path = fonts/LiberationSans/,
+                Extension=.ttf,
+                UprightFont=*-Regular,
+                ItalicFont=*-Italic,
+                BoldFont=*-Bold,
+                BoldItalicFont=*-BoldItalic,
+                Kerning=On
+            ]}
+
+        \def\MyMonoFont#1{\expandafter#1{IosevkaCustom}[
+                Scale = 0.9,
+                Path = fonts/Iosevka/,
+                Extension=.ttf,
+                UprightFont=*-Regular,
+                ItalicFont=*-Italic,
+                BoldFont=*-Bold,
+                BoldItalicFont=*-BoldItalic
+            ]}
+
+    \fi
+
+    \MyRomanFont{\setmainfont}
+    \MyRomanFont{\setromanfont}
+    \MyRomanFont{\newfontfamily{\cyrillicfont}}
+    \MyMonoFont{\setmonofont}
+    \MyMonoFont{\newfontfamily{\cyrillicfonttt}}
+    \MySansFont{\setsansfont}
+    \MySansFont{\newfontfamily{\cyrillicfontsf}}
+
+    \RequirePackage{polyglossia}
+    \setdefaultlanguage{russian}
+    \setotherlanguages{english}
+
 \else
 
-\def\MyRomanFont#1{\expandafter#1{Tempora}[
-    Path = fonts/Tempora/,
-    Extension=.otf,
-    UprightFont=*-Regular,
-    ItalicFont=*-Italic,
-    BoldFont=*-Bold,
-    BoldItalicFont=*-BoldItalic,
-    Kerning=On
-    ]}
-
-\def\MySansFont#1{\expandafter#1{LiberationSans}[
-    Path = fonts/LiberationSans/,
-    Extension=.ttf,
-    UprightFont=*-Regular,
-    ItalicFont=*-Italic,
-    BoldFont=*-Bold,
-    BoldItalicFont=*-BoldItalic,
-    Kerning=On
-    ]}
-
-\def\MyMonoFont#1{\expandafter#1{IosevkaCustom}[
-    Scale = 0.9,
-    Path = fonts/Iosevka/,
-    Extension=.ttf,
-    UprightFont=*-Regular,
-    ItalicFont=*-Italic,
-    BoldFont=*-Bold,
-    BoldItalicFont=*-BoldItalic
-    ]}
+    \RequirePackage{mmap}
+    \RequirePackage[T2A]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+    \RequirePackage[english,russian]{babel}
+    \selectlanguage{russian}
 
 \fi
 
-\MyRomanFont{\setmainfont}
-\MyRomanFont{\setromanfont}
-\MyRomanFont{\newfontfamily{\cyrillicfont}}
-\MyMonoFont{\setmonofont}
-\MyMonoFont{\newfontfamily{\cyrillicfonttt}}
-\MySansFont{\setsansfont}
-\MySansFont{\newfontfamily{\cyrillicfontsf}}
-
-\RequirePackage{polyglossia}
-\setdefaultlanguage{russian}
-\setotherlanguages{english}
-
-\else
-
-\RequirePackage{mmap}
-\RequirePackage[T2A]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[english,russian]{babel}
-\selectlanguage{russian}
-
-\fi
-
-\RequirePackage[unicode]{hyperref}
+\RequirePackage[unicode,pdfa]{hyperref}
 \RequirePackage{booktabs}
 \RequirePackage{indentfirst}
 \RequirePackage{titlesec}
@@ -151,50 +151,50 @@
 \setlength{\tabcolsep}{0.5em} % for the horizontal padding
 {\renewcommand{\arraystretch}{1.2}% for the vertical padding
 
-    \sloppy
+\sloppy
 
-    % authors metadata
+% authors metadata
 
-    \RequirePackage{hyperxmp}
-    \RequirePackage{etoolbox}
+\RequirePackage{hyperxmp}
+\RequirePackage{etoolbox}
 
-    \newbool{firstauthor}
-    \booltrue{firstauthor}
-    \newcommand{\defauthor}[4][]{%
-        \ifbool{firstauthor}{%
-            \appto\atext{#2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
-            \appto\ameta{#2}%
-            \appto\xmeta{\xmpquote{#2}}%
-            \boolfalse{firstauthor}
-        }{%
-            \appto\atext{,\\ #2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
-            \appto\ameta{ \and #2}%
-            \appto\xmeta{ \and \xmpquote{#2}}%
-        }%
-    }
+\newbool{firstauthor}
+\booltrue{firstauthor}
+\newcommand{\defauthor}[4][]{%
+    \ifbool{firstauthor}{%
+        \appto\atext{#2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
+        \appto\ameta{#2}%
+        \appto\xmeta{\xmpquote{#2}}%
+        \boolfalse{firstauthor}
+    }{%
+        \appto\atext{,\\ #2, #3 \href{mailto:#4}{\texttt{#4}}#1}%
+        \appto\ameta{ \and #2}%
+        \appto\xmeta{ \and \xmpquote{#2}}%
+    }%
+}
 
-    \def\titlethanks{}
-    \newcommand{\deftitle}[2][]{%
-        \def\titlethanks{#1}
-        \title{#2}
-    }
+\def\titlethanks{}
+\newcommand{\deftitle}[2][]{%
+    \def\titlethanks{#1}
+    \title{#2}
+}
 
-    \renewcommand\maketitle{%
-        \author{\ameta}%
-        \patchcmd{\xmeta}{, }{\xmpcomma\ }{\author{\xmeta}}{}%
-        \hypersetup{%
-            pdfauthor={\xmeta}%
-        }%
-        \begin{center}%
-            \vspace*{-12mm}
-            {\Large\bfseries \@title\titlethanks \par\vspace{3mm}}%
-            {\small\atext}\ifxetex\else
+\renewcommand\maketitle{%
+    \author{\ameta}%
+    \patchcmd{\xmeta}{, }{\xmpcomma\ }{\author{\xmeta}}{}%
+    \hypersetup{%
+        pdfauthor={\xmeta}%
+    }%
+    \begin{center}%
+        \vspace*{-12mm}
+        {\Large\bfseries \@title\titlethanks \par\vspace{3mm}}%
+        {\small\atext}\ifxetex\else
             \pdfcomment{Пожалуйста используйте XeLaTeX}
-            \fi
-        \end{center}\par%
-    }
+        \fi
+    \end{center}\par%
+}
 
-    \iffalse
+\iffalse
 
 
     \patchcmd{\xmeta}{, }{\xmpcomma\ }{\author{\xmeta}}{}%
@@ -204,6 +204,6 @@
         pdfauthor={\xmeta}%
     }%
     \show\xmeta%
-    \fi
+\fi
 
-    \endinput
+\endinput

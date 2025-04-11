@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{math-mech-sci}[2024/06/06 v0.1.3 Dmitry Luciv]
+\ProvidesClass{math-mech-sci}[2025/04/11 v0.2.1 Dmitry Luciv]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions
